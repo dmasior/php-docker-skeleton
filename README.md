@@ -5,12 +5,12 @@ There is support for two environments: development and production.
 Main difference between dev and prod envs is prod contains minimal software required to run app.
 Dev env contains additions like xdebug, phpunit and so on.
 ## Usage
-#### Run development-ready environment
+### Run development-ready environment
 ```bash
 $ git clone git@github.com:initx/php-docker-skeleton.git \
     cd php-docker-skeleton && docker-compose up -d
 ```
-#### Dig into app container
+### Dig into app container
 ```bash
 $ docker exec -it app-dev bash
 ```
