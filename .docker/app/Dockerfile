@@ -3,6 +3,8 @@
 ##### Stage 0: Prepare #####
 FROM php:7.4-fpm as prepare
 
+ENV APP_DIR=/php/src/initx/php-docker-skeleton
+
 RUN apt update && apt install -y git libzip-dev
 
 RUN pecl install redis zip \
@@ -12,12 +14,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
     && composer global require hirak/prestissimo
 
 # Add group and user to avoid read/write permission issues
-ARG USER_ID=1000
-ARG GROUP_ID=1000
+ENV USER_ID=1000
+ENV GROUP_ID=1000
 RUN groupadd -g $GROUP_ID app
 RUN useradd -d /home/app -s /bin/bash -u $USER_ID -g $GROUP_ID app
 
-WORKDIR /php/src/initx/php-docker-skeleton
+WORKDIR $APP_DIR
 
 COPY . .
 
@@ -32,7 +34,7 @@ RUN composer global remove hirak/prestissimo \
     && rm /usr/local/bin/composer \
     && apt remove -y git && apt autoremove -y
 
-RUN chown -R app:app /php/src/initx/php-docker-skeleton
+RUN chown -R $USER_ID:$GROUP_ID $APP_DIR
 USER app
 
 ##### Stage 2: Dev #####
@@ -44,5 +46,5 @@ RUN pecl install xdebug \
 RUN composer install --no-ansi --no-interaction \
     --no-progress --no-scripts --no-suggest --optimize-autoloader
 
-RUN chown -R app:app /php/src/initx/php-docker-skeleton
+RUN chown -R $USER_ID:$GROUP_ID $APP_DIR
 USER app
