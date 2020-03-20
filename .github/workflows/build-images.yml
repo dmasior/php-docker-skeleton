@@ -16,6 +16,7 @@ jobs:
 
       - name: Build App image
         id: build-app-image
+        env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t app:$IMAGE_TAG \
