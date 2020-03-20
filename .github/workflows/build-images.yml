@@ -20,5 +20,5 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t app:$IMAGE_TAG \
-            --taget=prod \
+            --target=prod \
             --file .docker/app/Dockerfile .
