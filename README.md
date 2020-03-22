@@ -25,13 +25,12 @@ $ docker-compose up -d
 ```bash
 $ docker exec -it app_php bash
 ```
+Tip: it is cool to create alias for entering app container in your `.bashrc` or `.zshrc`:
+```bash
+alias app_bash='docker exec -it app_php bash'
+```
 ### 4. Install dependencies
 ```bash
 $ composer install
 ```
 ### 5. Visit [localhost:8080](http://localhost:8080)
-
-Tip: it is cool to create alias for entering app container in your `.bashrc` or `.zshrc`:
-```bash
-alias app_bash='docker exec -it app_php bash'
-```
