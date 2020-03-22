@@ -52,4 +52,6 @@ RUN composer install --no-ansi --no-interaction \
     --no-progress --no-scripts --no-suggest --optimize-autoloader
 
 RUN chown -R $USER_ID:$GROUP_ID $APP_DIR
+RUN chown -R $USER_ID:$GROUP_ID /home/app/.composer
+
 USER app

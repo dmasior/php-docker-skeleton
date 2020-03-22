@@ -4,5 +4,5 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $templates = new League\Plates\Engine(__DIR__ . '/../src/template');
 
-$header = 'Hi ho let\'s go!';
-echo $templates->render('hi', ['header' => $header]);
+$number = \random_int(1, 100);
+echo $templates->render('hi', ['number' => $number]);
