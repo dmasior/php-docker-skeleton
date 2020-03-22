@@ -9,6 +9,7 @@ jobs:
   deploy:
     name: Build images, push to ECR and deploy to ECS
     runs-on: ubuntu-latest
+    timeout-minutes: 18
 
     steps:
       - name: Checkout
@@ -34,7 +35,6 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
             --target=prod \
-            --build-arg ARG_APP_VERSION=$GITHUB_SHA \
             --file .docker/app/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
@@ -47,7 +47,7 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG \
-            --build-arg ARG_APP_VERSION=$GITHUB_SHA \
+            --target=prod \
             --file .docker/nginx/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"

@@ -19,6 +19,7 @@ services:
       - .docker/shared_env
     build:
       context: .
+      target: dev
       dockerfile: .docker/nginx/Dockerfile
     ports:
       - "8080:80"

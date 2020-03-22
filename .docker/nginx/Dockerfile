@@ -1,4 +1,7 @@
-FROM nginx:stable
+# Multi-stage build. More info: https://docs.docker.com/develop/develop-images/multistage-build
+
+##### Stage 0: Prepare #####
+FROM nginx:stable as prepare
 
 ENV APP_DIR=/php/src/initx/php-docker-skeleton
 
@@ -25,3 +28,11 @@ EXPOSE 80
 
 HEALTHCHECK --timeout=3s \
   CMD curl -f localhost:80/ || exit 1
+
+##### Stage 1: Prod #####
+FROM prepare as prod
+RUN echo "upstream php-upstream { server 0.0.0.0:9001; }" > /etc/nginx/conf.d/upstream.conf
+
+##### Stage 1: Prod #####
+FROM prepare as dev
+RUN echo "upstream php-upstream { server app:9001; }" > /etc/nginx/conf.d/upstream.conf
