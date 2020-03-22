@@ -12,23 +12,24 @@ to AWS ECR and then deployed to ECS (Fargate). See `.github/workflows/build-and-
 
 Deploy link: http://php-docker-skeleton-1944113661.eu-west-1.elb.amazonaws.com
 ## Try it out
-### Clone
+### 1. Clone
 ```bash
 $ git clone git@github.com:initx/php-docker-skeleton.git \
     && cd php-docker-skeleton
 ```
-### Run dev environment
+### 2. Run dev environment
 ```bash
 $ docker-compose up -d
 ```
-### Dig into app container and install dependencies
+### 3. Dig into app container
 ```bash
-$ docker exec -it app_php composer install
+$ docker exec -it app_php bash
 ```
-Run your tools inside. Example:
+### 4. Install dependencies
 ```bash
-$ composer update
+$ composer install
 ```
+### 5. Visit [localhost:8080](http://localhost:8080)
 
 Tip: it is cool to create alias for entering app container in your `.bashrc` or `.zshrc`:
 ```bash
