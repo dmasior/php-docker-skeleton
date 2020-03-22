@@ -21,9 +21,9 @@ $ git clone git@github.com:initx/php-docker-skeleton.git \
 ```bash
 $ docker-compose up -d
 ```
-### Dig into app container
+### Dig into app container and install dependencies
 ```bash
-$ docker exec -it app_php bash
+$ docker exec -it app_php composer install
 ```
 Run your tools inside. Example:
 ```bash

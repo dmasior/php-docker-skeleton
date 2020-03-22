@@ -18,16 +18,19 @@ COPY .docker/app/php.ini $PHP_INI_DIR/conf.d/
 # Copy php-fpm pool config
 COPY .docker/app/pool.conf $PHP_FPM_DIR
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    # hirak/prestissimo plugin speeds up composer install a lot so let's add it
-    && composer global require hirak/prestissimo
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Add group and user to avoid read/write permission issues
 ENV USER_ID=1000
 ENV GROUP_ID=1000
 
 RUN groupadd --gid $GROUP_ID app \
-    && useradd --create-home --home-dir /home/app --shell /bin/bash --uid $USER_ID --gid $GROUP_ID app
+    && useradd --create-home \
+    --home-dir /home/app \
+    --shell /bin/bash \
+    --uid $USER_ID \
+    --gid $GROUP_ID \
+    app
 
 WORKDIR $APP_DIR
 
@@ -49,9 +52,9 @@ RUN composer install --no-ansi --no-dev --no-interaction \
 
 # Cleanup
 USER root
-RUN composer global remove hirak/prestissimo \
-    && rm /usr/local/bin/composer \
-    && apt remove -y git && apt autoremove -y
+RUN rm /usr/local/bin/composer \
+    && apt remove -y git \
+    && apt autoremove -y
 
 ##### Stage 2: Prepare -> Dev #####
 # Keep in mind, prod commands were not executed in dev image
@@ -62,5 +65,5 @@ RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
 USER app
-RUN composer install --no-ansi --no-interaction \
-    --no-progress --no-scripts --no-suggest --optimize-autoloader
+# hirak/prestissimo plugin speeds up composer install a lot so let's add it
+RUN composer global require hirak/prestissimo
