@@ -31,8 +31,8 @@ HEALTHCHECK --timeout=3s \
 
 ##### Stage 1: Prod #####
 FROM prepare as prod
-RUN echo "upstream php-upstream { server 0.0.0.0:9001; }" > /etc/nginx/conf.d/upstream.conf
+RUN echo "upstream app-upstream { server 0.0.0.0:9001; }" > /etc/nginx/conf.d/upstream.conf
 
 ##### Stage 1: Prod #####
 FROM prepare as dev
-RUN echo "upstream php-upstream { server app:9001; }" > /etc/nginx/conf.d/upstream.conf
+RUN echo "upstream app-upstream { server app:9001; }" > /etc/nginx/conf.d/upstream.conf
