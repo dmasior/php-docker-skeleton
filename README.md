@@ -1,27 +1,36 @@
 # Example PHP app dockerized
-This repository is a example of how to use Docker in your PHP app.
-Dockerfile's located in `.docker` dir and it's subdirectories.
-There is support for two environments: development and production.
-Main difference between dev and prod envs is prod contains minimal software required to run app.
-Dev env contains additions like xdebug, phpunit and so on.
-## Usage
-### Run development-ready environment
+This repository shows example usage of Docker in your PHP app.
+It solves common problems when working with Docker on dev/prod environments.
+- No more `permission denied` issues thanks to creating user with same ID as yours
+- No more dev/prod Dockerfiles. Just one Dockerfile per container thanks to using multi-stage builds
+- Easy & simple way to add another container such as redis, db and so on
+
+Dockerfile's located in `.docker` and it's subdirectories.
+
+App is built and pushed [through actions](https://github.com/initx/php-docker-skeleton/actions)
+to AWS ECR and then deployed to ECS (Fargate). See `.github/workflows/build-and-deploy.yml`.
+
+Deploy link: http://php-docker-skeleton-1944113661.eu-west-1.elb.amazonaws.com
+## Try it out
+### Clone
 ```bash
 $ git clone git@github.com:initx/php-docker-skeleton.git \
-    cd php-docker-skeleton && docker-compose up -d
+    && cd php-docker-skeleton
+```
+### Run dev environment
+```bash
+$ docker-compose up -d
 ```
 ### Dig into app container
 ```bash
-$ docker exec -it app-dev bash
+$ docker exec -it app_php bash
 ```
-Inside you can run tools, just by typing:
+Run your tools inside. Example:
 ```bash
 $ composer update
 ```
 
-You should not need to build prod images on your computer (it is done in github actions).
-But when needed, you can build them with following commands:
+Tip: it is cool to create alias for entering app container in your `.bashrc` or `.zshrc`:
 ```bash
-$ docker build --file .docker/app/Docker --tag app-prod --target prod . \
-    && docker build --file .docker/nginx/Docker --tag app-nginx-prod .
+alias app_bash='docker exec -it app_php bash'
 ```
