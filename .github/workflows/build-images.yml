@@ -3,11 +3,11 @@ on:
     branches:
       - master
 
-name: Build Images
+name: Build and deploy
 
 jobs:
   deploy:
-    name: Build
+    name: Build images, push to ECR and deploy to ECS
     runs-on: ubuntu-latest
 
     steps:
