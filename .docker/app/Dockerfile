@@ -23,6 +23,11 @@ WORKDIR $APP_DIR
 
 COPY . .
 
+COPY .docker/app/php.ini $PHP_INI_DIR/conf.d/
+COPY .docker/app/pool.conf /usr/local/etc/php-fpm.d/
+
+EXPOSE 9001
+
 ##### Stage 1: Prod #####
 FROM prepare as prod
 

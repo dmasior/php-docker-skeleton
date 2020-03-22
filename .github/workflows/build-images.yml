@@ -3,7 +3,7 @@ on:
     branches:
       - master
 
-name: Build Docker Images
+name: Build Images
 
 jobs:
   deploy:
@@ -22,3 +22,11 @@ jobs:
           docker build -t app:$IMAGE_TAG \
             --target=prod \
             --file .docker/app/Dockerfile .
+
+      - name: Build Nginx image
+        id: build-nginx-image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t nginx:$IMAGE_TAG \
+            --file .docker/nginx/Dockerfile .

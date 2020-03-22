@@ -1,29 +1,29 @@
 version: '3.7'
 services:
-  php:
+  app:
     container_name: app_php
     image: app-dev
     env_file:
-      - ./.docker/app/.env
+      - .docker/shared_env
     build:
       target: dev
       context: .
       dockerfile: .docker/app/Dockerfile
-    ports:
-      - "9001:9001"
     volumes:
       - .:/php/src/initx/php-docker-skeleton
 
-#  nginx:
-#    container_name: magecore_nginx
-#    image: magecore-nginx
-#    build:
-#      context: .
-#      dockerfile: .docker/nginx/Dockerfile
-#    ports:
-#      - "80:80"
-#    links:
-#      - php
-#    volumes:
-#      - ./logs/nginx:/var/log/nginx:cached
-#      - .:/php/src/initx/php-docker-skeleton:cached
+  nginx:
+    container_name: app_nginx
+    image: app-nginx
+    env_file:
+      - .docker/shared_env
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
+    ports:
+      - "8080:80"
+    links:
+      - app
+    volumes:
+      - .docker/logs/nginx:/var/log/nginx
+      - .:/php/src/initx/php-docker-skeleton

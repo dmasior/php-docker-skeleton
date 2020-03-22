@@ -1,1 +1,1 @@
-<h1><?php $this->e($header) ?></h1>
+<h1><?= $this->e($header) ?></h1>
