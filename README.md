@@ -11,7 +11,6 @@ Dockerfile's located in `.docker` and it's subdirectories.
 App is built and pushed [through actions](https://github.com/initx/php-docker-skeleton/actions)
 to AWS ECR and then deployed to ECS (Fargate). See `.github/workflows/build-and-deploy.yml`.
 
-Live deploy [link here](http://php-docker-skeleton-1944113661.eu-west-1.elb.amazonaws.com)
 ## Try it out
 ### 1. Clone
 ```bash
