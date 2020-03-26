@@ -1,4 +1,3 @@
-![Build and deploy](https://github.com/initx/php-docker-skeleton/workflows/Build%20and%20deploy/badge.svg?branch=master)
 # Example PHP app dockerized
 This repository shows example usage of Docker in your PHP app.
 It solves common problems when working with Docker on dev/prod environments.
